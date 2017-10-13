@@ -1,8 +1,11 @@
 class TeamRoomChannel < ApplicationCable::Channel
   def subscribed
-    puts "Subscribed!"
-    puts params[:teamRoom]
-    stream_from "team_room_channel_#{params[:teamRoom]}"
+    puts "Subscribing!"
+    team = Team.find_by(code: params[:teamRoom])
+    if team
+      puts params[:teamRoom]
+      stream_from "team_room_channel_#{params[:teamRoom]}"
+    end
   end
 
   def unsubscribed
