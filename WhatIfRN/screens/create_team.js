@@ -9,11 +9,6 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-const cable = ActionCable.createConsumer('ws://192.168.1.126:3000/cable');
-
-
-let channel;
-
 export default class CreateTeam extends Component {
   constructor(props){
     super(props);
@@ -33,19 +28,18 @@ export default class CreateTeam extends Component {
     this.subscribe(this.props.all.team.code);
   }
 
-  subscribe(code) {
+  subscribe = (code) => {
+    const { cable, receiveTeam } = this.props;
     const that = this;
     channel = cable.subscriptions.create({channel: 'TeamRoomChannel', teamRoom: code}, {
       received(data) {
-        that.setState(data);
+        receiveTeam(data);
         console.log(data);
       },
       connected() {
-        console.log(that)
         that.setState({connected: true});
       }
-  }
-  );
+    });
   }
 
   unsubscribe() {

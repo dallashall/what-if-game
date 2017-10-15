@@ -22,6 +22,7 @@ export default class StartScreen extends Component {
       );
   }
 
+
   render() {
     return (
       <View style={styles.container}>
@@ -32,6 +33,7 @@ export default class StartScreen extends Component {
           A game of unlimited imagination
         </Text>
         <Button onPress={this.createTeam} title="Create Team" />
+        <Button onPress={() => this.props.navigation.navigate('JoinTeam')} title="Join Game" />
       </View>
     );
   }

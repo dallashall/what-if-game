@@ -3,5 +3,5 @@ import AllReducer from './team_reducer';
 
 export default combineReducers({
   all: AllReducer,
-  cable: () => {return {};},
+  cable: (state = {}) => {return state;},
 });
