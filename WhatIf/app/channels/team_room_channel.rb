@@ -6,6 +6,7 @@ class TeamRoomChannel < ApplicationCable::Channel
       puts params
       # @user = User.find_by(id: params[:user][:id])
       stream_from "team_room_channel_#{params[:teamRoom]}"
+      ActionCable.server.broadcast "team_room_channel_#{@team.code}", { type: "RECEIVE_TEAM", team: @team, members: @team.users.count }
     end
   end
 

@@ -1,6 +1,6 @@
 const _state = {
-  arrangement = [],
-  ordinal = 0
+  arrangement: [],
+  ordinal: 0
 }
 
 export default (state = _state, action) => {

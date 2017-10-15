@@ -5,14 +5,14 @@ import {
   receiveTeam
  } from '../actions/team_actions';
 
-const mapState = ({cable, all}) => ({
+const mapState = ({cable, team}) => ({
   cable,
-  all
+  team
 });
 
 const actions = (dispatch) => ({
   createTeam: () => dispatch(createTeam()),
-  receiveTeam: team => dispatch(receiveTeam(team))
+  dispatch: action => dispatch(action)
 });
 
 export default connect(mapState, actions)(CreateTeam);

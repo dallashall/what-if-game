@@ -33,6 +33,9 @@ export default class StartScreen extends Component {
           A game of unlimited imagination
         </Text>
         <Button onPress={this.createTeam} title="Create Team" />
+        <Text style={styles.instructions}>
+          OR
+        </Text>
         <Button onPress={() => this.props.navigation.navigate('JoinTeam')} title="Join Game" />
       </View>
     );

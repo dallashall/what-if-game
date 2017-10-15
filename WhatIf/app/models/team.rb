@@ -5,16 +5,20 @@ class Team < ApplicationRecord
 
   after_initialize :set_team_code!
 
+  def set_team_code!
+    self.code ||= generate_team_code
+  end
+
   def team_code
     SecureRandom::urlsafe_base64(3).upcase
   end
 
-  def set_team_code!
+  def generate_team_code
     code = team_code
     while Team.find_by(code: code)
       code = team_code
     end
-    self.code = code
+    code
   end
 
   def questions_hash

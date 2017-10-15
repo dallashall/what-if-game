@@ -27,15 +27,15 @@ export default class JoinGame extends Component {
   }
 
   subscribe = (code) => {
-    const {cable, receiveTeam, user} = this.props;
+    const {cable, dispatch, user} = this.props;
     const that = this;
     channel = cable.subscriptions.create({channel: 'TeamRoomChannel', teamRoom: code, user}, {
       received(data) {
-        receiveTeam(data);
+        dispatch(data);
         console.log(data);
       },
       connected() {
-        that.setState({connected: true});
+        that.props.navigation.navigate('GameLobby');
       }
     });
   }

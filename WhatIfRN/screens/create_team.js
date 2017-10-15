@@ -25,15 +25,15 @@ export default class CreateTeam extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    this.subscribe(this.props.all.team.code);
+    this.subscribe(this.props.team.team.code);
   }
 
   subscribe = (code) => {
-    const { cable, receiveTeam } = this.props;
+    const { cable, dispatch } = this.props;
     const that = this;
     channel = cable.subscriptions.create({channel: 'TeamRoomChannel', teamRoom: code}, {
       received(data) {
-        receiveTeam(data);
+        dispatch(data);
         console.log(data);
       },
       connected() {
@@ -48,7 +48,8 @@ export default class CreateTeam extends Component {
   }
 
   render() {
-    const { team, members } = this.props.all;
+    console.log(this.props);
+    const { team, members } = this.props.team;
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -63,9 +64,7 @@ export default class CreateTeam extends Component {
         <Text>
           {members}
         </Text>
-        <Text>
-          {this.state.message}
-        </Text>
+        <Button title="Start Game" onPress={() => console.log('starting game...')} />
       </View>
     );
   }
