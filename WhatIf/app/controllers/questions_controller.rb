@@ -15,6 +15,13 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def continue_without_players
+    # todo
+    # destroy users without questions
+    # send members
+    # send shuffled questions
+  end
+
   private
 
   def question_params

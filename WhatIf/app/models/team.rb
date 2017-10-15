@@ -39,7 +39,7 @@ class Team < ApplicationRecord
   def answers_hash
     hsh = {}
     self.answers.each do |answer|
-      hsh[answer.user_id] = questions
+      hsh[answer.user_id] = answer
     end
     hsh
   end
@@ -53,5 +53,20 @@ class Team < ApplicationRecord
       hsh[id] = qs[shuffled_ids[idx]]
     end
     hsh
+  end
+
+  def arrangement
+    arr = []
+    as = shuffled_answers
+    questions.each do |question|
+      mixed_answer = as[question.user_id]
+      q = {}
+      q[question.user_id] = question
+      arr.push(q)
+      a = {}
+      a[mixed_answer.user_id] = mixed_answer
+      arr.push(a)
+    end
+    arr
   end
 end

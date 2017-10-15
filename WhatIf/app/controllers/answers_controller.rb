@@ -5,7 +5,8 @@ class AnswersController < ApplicationController
     if answer.save
       team = Team.find_by(answer_params[:team_id])
       if team.answers.count === team.questions.count
-        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.shuffled_answersh }
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.shuffled_answers }
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ARRANGEMENT", arrangement: team.arrangment, ordinal: 0 }
       else
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.answers_hash }
       end

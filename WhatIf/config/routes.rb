@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   post 'api/answers', to: 'answers#create'
   post 'api/teams', to: 'teams#create'
   get 'api/teams/:code', to: 'teams#join'
+  post 'api/ordinal', to: 'ordinals#set_current_ordinal'
 end
