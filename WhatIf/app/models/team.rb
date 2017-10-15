@@ -20,7 +20,18 @@ class Team < ApplicationRecord
   def questions_hash
     hsh = {}
     self.questions.each do |question|
-      hsh[question.user_id] = questions
+      hsh[question.user_id] = question
+    end
+    hsh
+  end
+
+  def shuffled_questions
+    hsh = {}
+    user_ids = self.questions.map(&:user_id)
+    shuffled_ids = user_ids.shuffle
+    qs = questions_hash
+    user_ids.each_with_index do |id, idx|
+      hsh[id] = qs[shuffled_ids[idx]]
     end
     hsh
   end
@@ -29,6 +40,17 @@ class Team < ApplicationRecord
     hsh = {}
     self.answers.each do |answer|
       hsh[answer.user_id] = questions
+    end
+    hsh
+  end
+
+  def shuffled_answers
+    hsh = {}
+    user_ids = self.answers.map(&:user_id)
+    shuffled_ids = user_ids.shuffle
+    qs = answers_hash
+    user_ids.each_with_index do |id, idx|
+      hsh[id] = qs[shuffled_ids[idx]]
     end
     hsh
   end

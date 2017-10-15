@@ -4,7 +4,11 @@ class AnswersController < ApplicationController
 
     if answer.save
       team = Team.find_by(answer_params[:team_id])
-      ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.answers_hash }
+      if team.answers.count === team.questions.count
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.shuffled_answersh }
+      else
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.answers_hash }
+      end
       render json: { message: "OK" }
     else
       render json: { message: answer.errors.full_messages }, status: 401
