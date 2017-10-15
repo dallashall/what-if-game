@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
     if answer.save
       team = Team.find_by(answer_params[:team_id])
       ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.answers_hash }
-      render json: { message: params[:message] }
+      render json: { message: "OK" }
     else
       render json: { message: answer.errors.full_messages }, status: 401
     end
