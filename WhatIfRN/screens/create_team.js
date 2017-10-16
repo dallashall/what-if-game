@@ -28,13 +28,22 @@ export default class CreateTeam extends Component {
     this.subscribe(this.props.team.team.code);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('current props',this.props);
+    console.log('next props', nextProps);
+    if (this.props.screen !== nextProps.screen) {
+      console.log('navigating to: ' + nextProps.screen)
+      this.props.navigation.navigate(nextProps.screen);
+    }
+  }
+
   subscribe = (code) => {
     const { cable, dispatch } = this.props;
     const that = this;
     channel = cable.subscriptions.create({channel: 'TeamRoomChannel', teamRoom: code}, {
       received(data) {
+        console.log('from socket', data);
         dispatch(data);
-        console.log(data);
       },
       connected() {
         that.setState({connected: true});
@@ -45,6 +54,10 @@ export default class CreateTeam extends Component {
   unsubscribe() {
     channel.unsubscribe();
     this.setState({connected: false});
+  }
+
+  startGame = () => {
+    this.props.startGame(this.props.team.team.code);
   }
 
   render() {
@@ -64,7 +77,7 @@ export default class CreateTeam extends Component {
         <Text>
           {members}
         </Text>
-        <Button title="Start Game" onPress={() => console.log('starting game...')} />
+        <Button title="Start Game" onPress={this.startGame} />
       </View>
     );
   }

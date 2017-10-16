@@ -15,6 +15,12 @@ class TeamsController < ApplicationController
       render json: {message: 'Team not found'}, status: 404
     end
   end
+  
+  def start
+    @team = Team.find_by(code: params[:code].upcase)
+    ActionCable.server.broadcast "team_room_channel_#{@team.code}", { type: "RECEIVE_SCREEN", screen: "AskQuestion" }
+    render json: { message: "OK" }
+  end
 
   private
 

@@ -19,3 +19,7 @@ export const joinGame = code => dispatch => {
     );
     // TODO: Add actual error handling
 }
+
+export const startGame = code => dispatch => {
+  return postToApi(`api/teams/${code}`);
+}

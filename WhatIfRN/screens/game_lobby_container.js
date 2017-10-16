@@ -5,9 +5,10 @@ import {
   receiveTeam
  } from '../actions/team_actions';
 
-const mapState = ({cable, team}) => ({
+const mapState = ({cable, team, screen}) => ({
   cable,
-  team
+  team,
+  screen
 });
 
 const actions = (dispatch) => ({

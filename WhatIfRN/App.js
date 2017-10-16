@@ -21,12 +21,14 @@ import StartScreen from './screens/start_screen_container';
 import CreateTeam from './screens/create_team_container';
 import JoinTeam from './screens/join_game_container';
 import GameLobby from './screens/game_lobby_container';
+import AskQuestion from './screens/ask_question_container';
 
 const Nav = StackNavigator({
   Home: { screen: StartScreen },
   CreateTeam: { screen: CreateTeam },
   JoinTeam: { screen: JoinTeam },
-  GameLobby: { screen: GameLobby }
+  GameLobby: { screen: GameLobby },
+  AskQuestion: { screen: AskQuestion}
 });
 
 export default class App extends Component {

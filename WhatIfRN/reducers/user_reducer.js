@@ -1,5 +1,5 @@
 const _state = {
-  tuser: {}
+  user: {}
 }
 
 export default (state = _state, action) => {

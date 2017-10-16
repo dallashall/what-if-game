@@ -19,6 +19,14 @@ export default class GameLobby extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('this.props', this.props);
+    console.log('nextProps', nextProps);
+    if (this.props.screen !== nextProps.screen) {
+      this.props.navigation.navigate(nextProps.screen);
+    }
+  }
+
   static navigationOptions = {
     header: null,
   }

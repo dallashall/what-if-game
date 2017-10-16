@@ -1,0 +1,11 @@
+const _state = "Home";
+
+export default (state = _state, action) => {
+  // debugger
+  switch (action.type) {
+    case "RECEIVE_SCREEN":
+      return action.screen;
+    default:
+      return state;
+  }
+};
