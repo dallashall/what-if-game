@@ -2,10 +2,11 @@ import { connect } from 'react-redux';
 import AskQuestion from './ask_question';
 import { createQuestion } from '../actions/question_actions';
 
-const mapState = ({ user, cable, team }) => ({
+const mapState = ({ user, cable, team, questions }) => ({
   cable,
   user,
-  team
+  team,
+  questions
 });
 
 const mapDispatch = (dispatch) => ({

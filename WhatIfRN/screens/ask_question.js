@@ -22,7 +22,10 @@ export default class AskQuestion extends Component {
       team_id: this.props.team.team.id,
       user_id: this.props.user.id
     }).then(() => {
-      console.log("navigating");
+      console.log("navigating", this.props);
+      if (Object.keys(this.props.questions).length === this.props.team.members) {
+        return;
+      }
       this.props.navigation.navigate('QuestionLobby');
     })
   }

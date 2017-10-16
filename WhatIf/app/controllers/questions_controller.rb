@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
       team = Team.find_by(id: question_params[:team_id])
       if team.questions.count === team.users.count
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_QUESTIONS", questions: team.shuffled_questions }
+        sleep 1
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_SCREEN", screen: "AnswerQuestion"}
       else
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_QUESTIONS", questions: team.questions_hash }
       end

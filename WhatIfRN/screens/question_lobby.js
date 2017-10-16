@@ -19,10 +19,16 @@ export default class QuestionLobby extends Component {
     };
   }
 
+  componentWillMount() {
+    if (Object.keys(this.props.questions).length === this.props.team.members) {
+      this.props.navigation.navigate("AnswerQuestion");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     console.log('this.props', this.props);
     console.log('nextProps', nextProps);
-    if (this.props.screen !== nextProps.screen) {
+    if (this.props.screen !== nextProps.screen && nextProps.screen !== "QuestionLobby") {
       this.props.navigation.navigate(nextProps.screen);
     }
   }
