@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
       else
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_QUESTIONS", questions: team.questions_hash }
       end
-      render json: { message: "OK" }
+      render json: { type: "STATUS", message: "OK" }
     else
       render json: { message: question.errors.full_messages }, status: 401
     end

@@ -40,13 +40,14 @@ export default class AnswerLobby extends Component {
   render() {
     console.log(this.props);
     const { team, members } = this.props.team;
+    const { questions, answers } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>
           Answers:
         </Text>
         <Text>
-          {Object.keys(this.props.answers).length}/{Object.keys(this.props.questions).length}
+          {Object.keys(answers).length}/{Object.keys(questions).length}
         </Text>
       </View>
     );

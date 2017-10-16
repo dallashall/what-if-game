@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import QuestionLobby from './question_lobby';
+import TurnLobby from './turn_lobby';
+import { setOrdinal } from '../actions/arrangement_actions';
 
 const mapState = ({ user, cable, team, questions, screen, arrangement }) => ({
   cable,
@@ -10,7 +11,8 @@ const mapState = ({ user, cable, team, questions, screen, arrangement }) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  dispatch: action => dispatch(action)
+  dispatch: action => dispatch(action),
+  setOrdinal: ordinal => dispatch(setOrdinal(ordinal))
  });
 
-export default connect(mapState, mapDispatch)(QuestionLobby);
+export default connect(mapState, mapDispatch)(TurnLobby);

@@ -9,7 +9,7 @@ import ScreenReducer from './screen_reducer';
 export default combineReducers({
   team: TeamReducer,
   questions: QuestionReducer,
-  answer: AnswerReducer,
+  answers: AnswerReducer,
   arrangement: ArrangementReducer,
   user: UserReducer,
   screen: ScreenReducer,

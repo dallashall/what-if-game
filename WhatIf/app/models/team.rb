@@ -32,7 +32,7 @@ class Team < ApplicationRecord
   def shuffled_questions
     hsh = {}
     user_ids = self.questions.map(&:user_id)
-    shuffled_ids = user_ids.shuffle
+    shuffled_ids = user_ids.rotate
     qs = questions_hash
     user_ids.each_with_index do |id, idx|
       hsh[id] = qs[shuffled_ids[idx]]
@@ -51,7 +51,7 @@ class Team < ApplicationRecord
   def shuffled_answers
     hsh = {}
     user_ids = self.answers.map(&:user_id)
-    shuffled_ids = user_ids.shuffle
+    shuffled_ids = user_ids.rotate
     qs = answers_hash
     user_ids.each_with_index do |id, idx|
       hsh[id] = qs[shuffled_ids[idx]]
@@ -61,16 +61,14 @@ class Team < ApplicationRecord
 
   def arrangement
     arr = []
-    as = shuffled_answers
-    questions.each do |question|
-      mixed_answer = as[question.user_id]
-      q = {}
-      q[question.user_id] = question
-      arr.push(q)
+    shuffled_questions.each do |id, question|
       a = {}
-      a[mixed_answer.user_id] = mixed_answer
+      a[id] = question.answer
+      q = {}
+      q[id] = question
       arr.push(a)
+      arr.push(q)
     end
-    arr
+    arr.rotate
   end
 end

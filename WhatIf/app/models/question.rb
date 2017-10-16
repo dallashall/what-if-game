@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  has_many :answers
+  has_one :answer
   belongs_to :team
   belongs_to :user
 end

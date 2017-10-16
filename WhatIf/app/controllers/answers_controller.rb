@@ -3,14 +3,15 @@ class AnswersController < ApplicationController
     answer = Answer.new(answer_params)
 
     if answer.save
-      team = Team.find_by(answer_params[:team_id])
+      team = answer.question.team
       if team.answers.count === team.questions.count
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.shuffled_answers }
-        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ARRANGEMENT", arrangement: team.arrangment, ordinal: 0 }
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ARRANGEMENT", arrangement: team.arrangement, ordinal: 0 }
+        ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_SCREEN", screen: "TurnLobby" }
       else
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_ANSWERS", answers: team.answers_hash }
       end
-      render json: { message: "OK" }
+      render json: { type: "STATUS", message: "OK" }
     else
       render json: { message: answer.errors.full_messages }, status: 401
     end

@@ -24,9 +24,9 @@ export default class AnswerQuestion extends Component {
       user_id: user.id,
       question_id: questions[user.id].id
     }).then(() => {
-      console.log("navigating");
+      console.log("navigating", this.props);
       if (Object.keys(answers).length === Object.keys(questions).length) {
-        return;
+        navigation.navigate('TurnLobby');
       }
       navigation.navigate('AnswerLobby');
     });
@@ -39,7 +39,7 @@ export default class AnswerQuestion extends Component {
         <Text>
           {questions[user.id].body}
         </Text>
-        <TextInput onChangeText={question => this.setState({answer})} value={this.state.answer}/>
+        <TextInput onChangeText={answer => this.setState({answer})} value={this.state.answer}/>
         <Button title="Submit Answer" onPress={this.handleSubmit} />
       </View>
     );
