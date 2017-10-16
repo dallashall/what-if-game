@@ -16,10 +16,14 @@ export default class AskQuestion extends Component {
   }
 
   handleSubmit = () => {
+    console.log(this.props.user.id)
     this.props.createQuestion({
       body: this.state.question,
       team_id: this.props.team.team.id,
       user_id: this.props.user.id
+    }).then(() => {
+      console.log("navigating");
+      this.props.navigation.navigate('QuestionLobby');
     })
   }
 

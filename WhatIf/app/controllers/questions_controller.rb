@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   def create
     question = Question.new(question_params)
-
+    puts question
     if question.save
-      team = Team.find_by(question_params[:team_id])
+      team = Team.find_by(id: question_params[:team_id])
       if team.questions.count === team.users.count
         ActionCable.server.broadcast "team_room_channel_#{team.code}", { type: "RECEIVE_QUESTIONS", questions: team.shuffled_questions }
       else
@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
+    puts params
     params.require(:question).permit(:team_id, :body, :user_id)
   end
 end
