@@ -6,20 +6,41 @@ import {
   View,
   Button
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export default class StartScreen extends Component {
+  constructor(){
+    super();
+    this.state = {
+      disabled: false
+    };
+  }
 
   static navigationOptions = {
     header: null,
   }
 
+  resetTo(routeName) {
+    return NavigationActions.reset({
+      index:0,
+      actions: [
+        NavigationActions.navigate({ routeName })
+      ]
+    });
+  }
+
   createTeam = () => {
+    this.setState({disabled: true});
     this.props.createTeam()
       .then(
-        () => this.props.navigation.navigate('CreateTeam'),
+        () => this.props.navigation.dispatch(this.resetTo('CreateTeam')),
         error => console.log(error)
       );
+  }
+
+  goToJoinGame = () => {
+    this.setState({disabled: true});
+    this.props.navigation.dispatch(this.resetTo('JoinTeam'));
   }
 
 
@@ -32,11 +53,15 @@ export default class StartScreen extends Component {
         <Text style={styles.instructions}>
           A game of unlimited imagination
         </Text>
-        <Button onPress={this.createTeam} title="Create Team" />
-        <Text style={styles.instructions}>
+        <View style={{width: 150}}>
+          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.createTeam} title="Create Game" />
+        </View>
+        <Text style={styles.or}>
           OR
         </Text>
-        <Button onPress={() => this.props.navigation.navigate('JoinTeam')} title="Join Game" />
+        <View style={{width: 150}}>
+          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.goToJoinGame} title="Join Game" />
+        </View>
       </View>
     );
   }
@@ -48,15 +73,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 10
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 52,
     textAlign: 'center',
-    margin: 10,
+    margin: 20
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 40,
   },
+  or: {
+    textAlign: 'center',
+    margin: 10
+  },
+  btn: {
+    fontSize: 30,
+    width: 200
+  }
 });

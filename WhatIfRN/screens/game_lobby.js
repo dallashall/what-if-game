@@ -7,7 +7,7 @@ import {
   View,
   Button
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export default class GameLobby extends Component {
   constructor(props){
@@ -19,16 +19,25 @@ export default class GameLobby extends Component {
     };
   }
 
+  static navigationOptions = {
+    header: null,
+  }
+
+  resetTo(routeName) {
+    return NavigationActions.reset({
+      index:0,
+      actions: [
+        NavigationActions.navigate({ routeName })
+      ]
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     console.log('this.props', this.props);
     console.log('nextProps', nextProps);
     if (this.props.screen !== nextProps.screen) {
-      this.props.navigation.navigate(nextProps.screen);
+      this.props.navigation.dispatch(this.resetTo(nextProps.screen));
     }
-  }
-
-  static navigationOptions = {
-    header: null,
   }
 
   render() {
@@ -36,16 +45,16 @@ export default class GameLobby extends Component {
     const { team, members } = this.props.team;
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
+        <Text style={styles.label}>
           Game Code:
         </Text>
-        <Text>
+        <Text style={styles.code}>
           {team.code}
         </Text>
-        <Text style={styles.instructions}>
+        <Text style={styles.playersLabel}>
           Players Joined
         </Text>
-        <Text>
+        <Text style={styles.players}>
           {members}
         </Text>
       </View>
@@ -59,15 +68,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 10
   },
-  welcome: {
-    fontSize: 20,
+  label: {
+    fontSize: 30,
     textAlign: 'center',
-    margin: 10,
+    margin: 20,
   },
-  instructions: {
+  code: {
+    textAlign: 'center',
+    fontSize: 50,
+    margin: 20
+  },
+  playersLabel: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  players: {
+    textAlign: 'center',
+    fontSize: 30,
+    marginBottom: 40,
   },
 });

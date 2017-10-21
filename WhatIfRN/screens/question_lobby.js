@@ -7,7 +7,7 @@ import {
   View,
   Button
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export default class QuestionLobby extends Component {
   constructor(props){
@@ -19,9 +19,18 @@ export default class QuestionLobby extends Component {
     };
   }
 
+  resetTo(routeName) {
+    return NavigationActions.reset({
+      index:0,
+      actions: [
+        NavigationActions.navigate({ routeName })
+      ]
+    });
+  }
+
   componentWillMount() {
     if (Object.keys(this.props.questions).length === this.props.team.members) {
-      this.props.navigation.navigate("AnswerQuestion");
+      this.props.navigation.dispatch(this.resetTo("AnswerQuestion"));
     }
   }
 
@@ -29,7 +38,7 @@ export default class QuestionLobby extends Component {
     console.log('this.props', this.props);
     console.log('nextProps', nextProps);
     if (this.props.screen !== nextProps.screen && nextProps.screen !== "QuestionLobby") {
-      this.props.navigation.navigate(nextProps.screen);
+      this.props.navigation.dispatch(this.resetTo(nextProps.screen));
     }
   }
 
@@ -42,10 +51,10 @@ export default class QuestionLobby extends Component {
     const { team, members } = this.props.team;
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions}>
+        <Text style={styles.label}>
           Questions:
         </Text>
-        <Text>
+        <Text style={styles.questions}>
           {Object.keys(this.props.questions).length}/{members}
         </Text>
       </View>
@@ -65,9 +74,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
+  label: {
+    fontSize: 30,
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  questions: {
+    fontSize: 50
+  }
 });

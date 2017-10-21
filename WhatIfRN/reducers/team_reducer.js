@@ -9,6 +9,8 @@ export default (state = _state, action) => {
       return Object.assign({}, state, { team: action.team, members: action.members });
     case "RECEIVE_TEAM_AND_USER":
       return Object.assign({}, state, { team: action.team, members: action.members });
+    case "RESTART_GAME":
+      return _state;
     default:
       return state;
   }

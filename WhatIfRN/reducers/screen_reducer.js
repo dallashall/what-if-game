@@ -5,6 +5,8 @@ export default (state = _state, action) => {
   switch (action.type) {
     case "RECEIVE_SCREEN":
       return action.screen;
+    case "RESTART_GAME":
+      return _state;
     default:
       return state;
   }

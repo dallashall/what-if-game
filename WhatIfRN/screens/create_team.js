@@ -7,7 +7,7 @@ import {
   View,
   Button
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export default class CreateTeam extends Component {
   constructor(props){
@@ -15,12 +15,22 @@ export default class CreateTeam extends Component {
     this.state = {
       message: "",
       connected: false,
-      channel: false
+      channel: false,
+      disabled: false
     };
   }
 
   static navigationOptions = {
     header: null,
+  }
+
+  resetTo(routeName) {
+    return NavigationActions.reset({
+      index:0,
+      actions: [
+        NavigationActions.navigate({ routeName })
+      ]
+    });
   }
 
   componentDidMount() {
@@ -33,7 +43,7 @@ export default class CreateTeam extends Component {
     console.log('next props', nextProps);
     if (this.props.screen !== nextProps.screen) {
       console.log('navigating to: ' + nextProps.screen)
-      this.props.navigation.navigate(nextProps.screen);
+      this.props.navigation.dispatch(this.resetTo(nextProps.screen));
     }
   }
 
@@ -57,6 +67,7 @@ export default class CreateTeam extends Component {
   }
 
   startGame = () => {
+    this.setState({disabled: true});
     this.props.startGame(this.props.team.team.code);
   }
 
@@ -65,19 +76,21 @@ export default class CreateTeam extends Component {
     const { team, members } = this.props.team;
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Your Code:
+        <Text style={styles.label}>
+          Game Code:
         </Text>
-        <Text>
+        <Text style={styles.code}>
           {team.code}
         </Text>
-        <Text style={styles.instructions}>
-          Players Joined
+        <Text style={styles.playersLabel}>
+          Players Joined:
         </Text>
-        <Text>
+        <Text style={styles.players}>
           {members}
         </Text>
-        <Button title="Start Game" onPress={this.startGame} />
+        <View style={styles.button}>
+          <Button disabled={this.state.disabled} title="Start Game" onPress={this.startGame} />
+        </View>
       </View>
     );
   }
@@ -89,15 +102,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 10
   },
-  welcome: {
-    fontSize: 20,
+  label: {
+    fontSize: 30,
     textAlign: 'center',
-    margin: 10,
+    marginBottom: 5,
   },
-  instructions: {
+  code: {
+    textAlign: 'center',
+    fontSize: 80,
+    marginBottom: 50
+  },
+  playersLabel: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  players: {
+    textAlign: 'center',
+    fontSize: 30,
+    marginBottom: 50,
+  },
+  button: {
+    width: 150
+  }
 });

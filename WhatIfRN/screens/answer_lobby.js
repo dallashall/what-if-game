@@ -7,7 +7,7 @@ import {
   View,
   Button
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export default class AnswerLobby extends Component {
   constructor(props){
@@ -19,9 +19,18 @@ export default class AnswerLobby extends Component {
     };
   }
 
+  resetTo(routeName) {
+    return NavigationActions.reset({
+      index:0,
+      actions: [
+        NavigationActions.navigate({ routeName })
+      ]
+    });
+  }
+
   componentWillMount() {
     if (Object.keys(this.props.answers).length === Object.keys(this.props.questions).length) {
-      this.props.navigation.navigate("TurnLobby");
+      this.props.navigation.dispatch(this.resetTo("TurnLobby"));
     }
   }
 
@@ -29,7 +38,7 @@ export default class AnswerLobby extends Component {
     console.log('this.props', this.props);
     console.log('nextProps', nextProps);
     if (this.props.screen !== nextProps.screen) {
-      this.props.navigation.navigate(nextProps.screen);
+      this.props.navigation.dispatch(this.resetTo(nextProps.screen));
     }
   }
 
@@ -43,10 +52,10 @@ export default class AnswerLobby extends Component {
     const { questions, answers } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions}>
+        <Text style={styles.label}>
           Answers:
         </Text>
-        <Text>
+        <Text style={styles.answers}>
           {Object.keys(answers).length}/{Object.keys(questions).length}
         </Text>
       </View>
@@ -66,9 +75,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
+  label: {
     textAlign: 'center',
     color: '#333333',
+    fontSize: 30,
     marginBottom: 5,
   },
+  answers: {
+    fontSize: 40
+  }
 });
