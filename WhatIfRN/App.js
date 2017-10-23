@@ -13,7 +13,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import RootReducer from './reducers/root_reducer';
 
-const cable = ActionCable.createConsumer('ws://192.168.1.126:3000/cable');
+const cable = ActionCable.createConsumer('ws://az-dallas.eastus.cloudapp.azure.com/cable');
 
 const store = createStore(RootReducer, { cable }, applyMiddleware(thunk));
 

@@ -1,7 +1,7 @@
 // The following is an easily configurable, modular
 // CRUD interface. It uses the fetch protocol.
 
-const apiUrl = 'http://192.168.1.126:3000/';
+const apiUrl = 'http://az-dallas.eastus.cloudapp.azure.com/';
 
 const _toApi = function _toApi(url, method, payload, token) {
   return new Promise((resolve, reject) => {
