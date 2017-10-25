@@ -33,6 +33,9 @@ export default class JoinGame extends Component {
   subscribe = (code) => {
     const { cable, dispatch } = this.props;
     const that = this;
+    // if (cable.subscriptions['subscriptions'].length > 0) {
+    //   cable.subscriptions.remove(cable.subscriptions['subscriptions'][0]);
+    // }
     channel = cable.subscriptions.create({channel: 'TeamRoomChannel', teamRoom: code}, {
       received(data) {
         console.log('from socket', data);

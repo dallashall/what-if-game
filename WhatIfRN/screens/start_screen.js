@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  TouchableOpacity
 } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
@@ -19,6 +20,14 @@ export default class StartScreen extends Component {
   static navigationOptions = {
     header: null,
   }
+
+  componentDidMount() {
+    const { cable } = this.props;
+    if (cable.subscriptions['subscriptions'].length > 1) {
+      cable.subscriptions.remove(cable.subscriptions['subscriptions'][1]);
+    }
+  }
+  
 
   resetTo(routeName) {
     return NavigationActions.reset({
@@ -38,9 +47,9 @@ export default class StartScreen extends Component {
       );
   }
 
-  goToJoinGame = () => {
+  goToScreen = (screen) => () => {
     this.setState({disabled: true});
-    this.props.navigation.dispatch(this.resetTo('JoinTeam'));
+    this.props.navigation.dispatch(this.resetTo(screen));
   }
 
 
@@ -60,8 +69,20 @@ export default class StartScreen extends Component {
           OR
         </Text>
         <View style={{width: 150}}>
-          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.goToJoinGame} title="Join Game" />
+          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.goToScreen('JoinGame')} title="Join Game" />
         </View>
+        <TouchableOpacity onPress={this.goToScreen('Instructions')} style={styles.howToTouch}>
+          <View style={styles.howToBtn}>
+            <View style={styles.circle}>
+              <Text style={styles.qMark}>
+                ?
+              </Text>
+            </View>
+            <Text style={styles.howToText}>
+              Learn to play!
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -92,5 +113,36 @@ const styles = StyleSheet.create({
   btn: {
     fontSize: 30,
     width: 200
+  },
+  howToBtn: {
+    width: 150,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 1,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 20,
+    borderRadius: 2
+  },
+  howToTouch: {
+    width: 160, 
+    height: 100, 
+    justifyContent: 'center', 
+    alignItems: "center", 
+    backgroundColor: '#F5FCFF'
+  },
+  howToText: {
+    color: 'rgb(30, 30, 30)'
+  },
+  circle: {
+    borderRadius: 15,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    width: 30
   }
 });

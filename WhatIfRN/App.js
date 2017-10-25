@@ -26,6 +26,7 @@ import QuestionLobby from './screens/question_lobby_container';
 import AnswerQuestion from './screens/answer_question_container';
 import AnswerLobby from './screens/answer_lobby_container';
 import TurnLobby from './screens/turn_lobby_container';
+import Instructions from './screens/instructions';
 
 const Nav = StackNavigator({
   Home: { screen: StartScreen },
@@ -36,7 +37,8 @@ const Nav = StackNavigator({
   QuestionLobby: { screen: QuestionLobby },
   AnswerQuestion: { screen: AnswerQuestion },
   AnswerLobby: { screen: AnswerLobby },
-  TurnLobby: { screen: TurnLobby }
+  TurnLobby: { screen: TurnLobby },
+  Instructions: { screen: Instructions },
 });
 
 export default class App extends Component {
