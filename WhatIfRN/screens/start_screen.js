@@ -69,7 +69,7 @@ export default class StartScreen extends Component {
           OR
         </Text>
         <View style={{width: 150}}>
-          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.goToScreen('JoinGame')} title="Join Game" />
+          <Button disabled={this.state.disabled} style={styles.btn} onPress={this.goToScreen('JoinTeam')} title="Join Game" />
         </View>
         <TouchableOpacity onPress={this.goToScreen('Instructions')} style={styles.howToTouch}>
           <View style={styles.howToBtn}>
